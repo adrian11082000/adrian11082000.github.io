@@ -1,47 +1,31 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Villana FM</title>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://extassisnetwork.com/player/Luna/luna.js"></script>
     <style>
-        body, html { 
-            margin: 0; 
-            padding: 0; 
-            background: transparent !important; 
-            height: 100%; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center;
-            overflow: hidden;
-        }
-        /* Contenedor con Neón Naranja */
-        #villana-wrapper {
-            width: 360px;
-            height: 450px;
-            background: #000000;
+        body, html { margin: 0; padding: 0; background: transparent; height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+        #wrapper {
+            width: 360px; height: 450px;
+            background: #000;
             border-radius: 25px;
             border: 3px solid #FF5E00;
             box-shadow: 0 0 25px #FF5E00;
-            overflow: hidden;
-            position: relative;
         }
     </style>
 </head>
 <body>
-
-    <div id="villana-wrapper">
-        <div id="radio-player"></div>
+    <div id="wrapper">
+        <div id="luna-player"></div>
     </div>
-
     <script>
         $(document).ready(function() {
-            $("#radio-player").lunaradio({
+            $("#luna-player").lunaradio({
                 streamurl: "https://radio.villasnafm.org/stream",
                 radioname: "Villana FM",
                 userinterface: "big",
-                backgroundcolor: "transparent",
+                backgroundcolor: "rgba(0,0,0,0)",
                 fontcolor: "#ffffff",
                 hightlightcolor: "#FF5E00",
                 fontratio: "0.4",
