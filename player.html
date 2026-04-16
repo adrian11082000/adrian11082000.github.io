@@ -1,33 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
     <style>
-        /* Hacemos el fondo transparente */
         body, html { 
             margin: 0; 
             padding: 0; 
             background: transparent !important; 
             overflow: hidden; 
+            height: 100%; 
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
         }
-
-        /* Creamos el efecto 3D y Neón alrededor del contenedor */
         #villana-radio { 
-            width: 90% !important; 
-            max-width: 400px;
+            width: 360px !important; /* Tamaño fijo para que no se deforme */
+            height: 450px !important;
             border-radius: 20px;
-            /* Sombra roja neón para efecto 3D flotante */
-            box-shadow: 0 0 20px #E31E24, 0 0 40px rgba(227, 30, 36, 0.3);
-            border: 1px solid rgba(227, 30, 36, 0.5);
-            overflow: hidden;
-            transition: transform 0.3s ease;
-        }
-
-        #villana-radio:hover {
-            transform: scale(1.02); /* Pequeño efecto de acercamiento al tocarlo */
+            box-shadow: 0 0 30px #E31E24; /* El neón rojo */
+            border: 2px solid #E31E24;
         }
     </style>
 </head>
@@ -42,7 +33,7 @@
             streamurl: "https://radio.villasnafm.org/stream",
             radioname: "Villana Fm",
             userinterface: "big",
-            backgroundcolor: "rgba(0,0,0,0.7)", // Negro semitransparente para que se vea el neón detrás
+            backgroundcolor: "rgba(0,0,0,0.9)", 
             fontcolor: "#ffffff",
             hightlightcolor: "#E31E24",
             fontratio: "0.4",
