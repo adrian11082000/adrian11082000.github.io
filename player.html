@@ -1,1 +1,43 @@
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script><script src="https://extassisnetwork.com/player/Luna/luna.js"></script><div id="extassisnetwork" style="width:360px; height:450px;"></div><script> $("#extassisnetwork").lunaradio({ streamurl: "https://radio.villasnafm.org/stream", radioname: "Villana Fm", coverimage: "", onlycoverimage: true, userinterface: "big", backgroundcolor: "#ffffff", fontcolor: "#000000", hightlightcolor: "#969696", fontname: "Be Vietnam", googlefont: "Be Vietnam", fontratio: "0.4", scroll: "true", coverstyle: "animated", usevisualizer: "real", visualizertype: "6", streamtype: "shoutcast2", shoutcastpath: "/stream", shoutcastid: "1", metadatainterval: "5000", volume: "100", usestreamcorsproxy: "true", }); </script>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body, html { margin: 0; padding: 0; background: transparent; overflow: hidden; }
+        /* Forzamos a que el reproductor ocupe el 100% del cuadro de Nicepage */
+        #extassisnetwork { width: 100% !important; height: 100vh !important; }
+    </style>
+</head>
+<body>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://extassisnetwork.com/player/Luna/luna.js"></script>
+    
+    <div id="extassisnetwork"></div>
+
+    <script>
+        $("#extassisnetwork").lunaradio({
+            streamurl: "https://radio.villasnafm.org/stream",
+            radioname: "Villana Fm",
+            coverimage: "URL_DE_TU_LOGO_AQUI", // Puedes poner el link de tu logo
+            onlycoverimage: false, // Cambiado a false para que se vea el ecualizador y la info
+            userinterface: "big",
+            backgroundcolor: "#000000", // Fondo Negro
+            fontcolor: "#ffffff",       // Texto Blanco
+            hightlightcolor: "#E31E24", // Rojo Villana para botones y detalles
+            fontname: "Be Vietnam",
+            googlefont: "Be Vietnam",
+            fontratio: "0.4",
+            scroll: "true",
+            coverstyle: "animated",
+            usevisualizer: "real",
+            visualizertype: "6",
+            streamtype: "shoutcast2",
+            shoutcastpath: "/stream",
+            shoutcastid: "1",
+            metadatainterval: "5000",
+            volume: "100",
+            usestreamcorsproxy: "true",
+        });
+    </script>
+</body>
+</html>
