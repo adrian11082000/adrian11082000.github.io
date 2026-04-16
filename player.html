@@ -2,60 +2,57 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Villana FM - Player</title>
+    <title>Villana FM</title>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://extassisnetwork.com/player/Luna/luna.js"></script>
-    
     <style>
         body, html { 
             margin: 0; 
             padding: 0; 
             background: transparent !important; 
-            overflow: hidden; 
+            height: 100%; 
             display: flex; 
             justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
+            align-items: center;
+            overflow: hidden;
         }
-
-        #villana-container {
-            width: 360px !important;
-            height: 450px !important;
+        /* Contenedor con Neón Naranja */
+        #villana-wrapper {
+            width: 360px;
+            height: 450px;
             background: #000000;
             border-radius: 25px;
-            border: 3px solid #FF5E00; /* Naranja Neón */
-            box-shadow: 0 0 20px rgba(255, 94, 0, 0.6), 0 10px 40px rgba(0, 0, 0, 0.4);
+            border: 3px solid #FF5E00;
+            box-shadow: 0 0 25px #FF5E00;
             overflow: hidden;
-            transition: transform 0.3s ease;
-        }
-
-        #villana-container:hover {
-            transform: scale(1.03);
+            position: relative;
         }
     </style>
 </head>
 <body>
 
-    <div id="villana-container">
+    <div id="villana-wrapper">
         <div id="radio-player"></div>
     </div>
 
     <script>
-        jQuery("#radio-player").lunaradio({
-            // REVISA ESTA URL: ¿Es villaSna o villana? He puesto la que pasaste al principio
-            streamurl: "https://radio.villasnafm.org/stream", 
-            radioname: "Villana FM",
-            userinterface: "big",
-            backgroundcolor: "transparent", 
-            fontcolor: "#ffffff",
-            hightlightcolor: "#FF5E00", 
-            fontratio: "0.4",
-            usevisualizer: "real",
-            visualizertype: "6",
-            streamtype: "shoutcast2",
-            shoutcastpath: "/stream",
-            shoutcastid: "1",
-            usestreamcorsproxy: "true"
+        $(document).ready(function() {
+            $("#radio-player").lunaradio({
+                streamurl: "https://radio.villasnafm.org/stream",
+                radioname: "Villana FM",
+                userinterface: "big",
+                backgroundcolor: "transparent",
+                fontcolor: "#ffffff",
+                hightlightcolor: "#FF5E00",
+                fontratio: "0.4",
+                usevisualizer: "real",
+                visualizertype: "6",
+                streamtype: "shoutcast2",
+                shoutcastpath: "/stream",
+                shoutcastid: "1",
+                usestreamcorsproxy: "true",
+                volume: "100"
+            });
         });
     </script>
 </body>
