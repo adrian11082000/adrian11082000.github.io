@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -8,10 +8,10 @@
         body, html { margin: 0; padding: 0; background: transparent; height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; }
         #wrapper {
             width: 360px; height: 450px;
-            background: #000;
+            background: #000000;
             border-radius: 25px;
             border: 3px solid #FF5E00;
-            box-shadow: 0 0 25px #FF5E00;
+            box-shadow: 0 0 20px #FF5E00;
         }
     </style>
 </head>
@@ -28,13 +28,13 @@
                 backgroundcolor: "rgba(0,0,0,0)",
                 fontcolor: "#ffffff",
                 hightlightcolor: "#FF5E00",
-                fontratio: "0.4",
-                usevisualizer: "real",
-                visualizertype: "6",
+                fontratio: "0.5",
+                usevisualizer: "fake", /* Cambiado a fake para forzar la carga rápida */
+                visualizertype: "1",
                 streamtype: "shoutcast2",
                 shoutcastpath: "/stream",
                 shoutcastid: "1",
-                usestreamcorsproxy: "true",
+                usestreamcorsproxy: "true", /* Esto es lo que ayuda a que no se quede negro */
                 volume: "100"
             });
         });
