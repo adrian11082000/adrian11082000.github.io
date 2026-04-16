@@ -1,51 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Villana FM - Player</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://extassisnetwork.com/player/Luna/luna.js"></script>
+    
     <style>
         body, html { 
             margin: 0; 
             padding: 0; 
             background: transparent !important; 
             overflow: hidden; 
-            height: 100%; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
         }
-        #villana-radio { 
-            width: 360px !important; 
+
+        #villana-container {
+            width: 360px !important;
             height: 450px !important;
-            border-radius: 20px;
-            /* Sombra Neón más fuerte para fondo blanco */
-            box-shadow: 0 10px 30px rgba(227, 30, 36, 0.6), 0 0 15px #E31E24; 
-            border: 3px solid #E31E24;
-            background-color: #000000; /* El reproductor en sí sigue siendo negro para que luzca */
-            transform: perspective(1000px) rotateX(5deg); /* Efecto leve de inclinación 3D */
+            background: rgba(0, 0, 0, 0.9); /* Fondo negro profundo */
+            border-radius: 25px;
+            /* Neón Naranja Pro #FF5E00 */
+            border: 3px solid #FF5E00;
+            box-shadow: 0 0 20px rgba(255, 94, 0, 0.6), 0 10px 40px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Efecto 3D al pasar el mouse */
+        #villana-container:hover {
+            transform: scale(1.03) translateY(-5px);
+            box-shadow: 0 0 30px rgba(255, 94, 0, 0.8), 0 15px 50px rgba(0, 0, 0, 0.3);
         }
     </style>
 </head>
 <body>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://extassisnetwork.com/player/Luna/luna.js"></script>
-    
-    <div id="villana-radio"></div>
-    
+
+    <div id="villana-container">
+        <div id="radio-player"></div>
+    </div>
+
     <script>
-        jQuery("#villana-radio").lunaradio({
-            streamurl: "https://radio.villasnafm.org/stream",
-            radioname: "Villana Fm",
+        jQuery("#radio-player").lunaradio({
+            streamurl: "https://radio.villanafm.org/stream",
+            radioname: "Villana FM",
             userinterface: "big",
-            backgroundcolor: "#000000", 
+            backgroundcolor: "transparent", 
             fontcolor: "#ffffff",
-            hightlightcolor: "#E31E24",
+            hightlightcolor: "#FF5E00", /* Naranja en botones y visualizador */
+            fontname: "Be Vietnam",
+            googlefont: "Be Vietnam",
             fontratio: "0.4",
+            scroll: "true",
+            coverstyle: "animated",
             usevisualizer: "real",
             visualizertype: "6",
             streamtype: "shoutcast2",
             shoutcastpath: "/stream",
             shoutcastid: "1",
-            usestreamcorsproxy: "true",
+            metadatainterval: "5000",
+            volume: "100",
+            usestreamcorsproxy: "true"
         });
     </script>
 </body>
