@@ -14,11 +14,14 @@
             align-items: center;
         }
         #villana-radio { 
-            width: 360px !important; /* Tamaño fijo para que no se deforme */
+            width: 360px !important; 
             height: 450px !important;
             border-radius: 20px;
-            box-shadow: 0 0 30px #E31E24; /* El neón rojo */
-            border: 2px solid #E31E24;
+            /* Sombra Neón más fuerte para fondo blanco */
+            box-shadow: 0 10px 30px rgba(227, 30, 36, 0.6), 0 0 15px #E31E24; 
+            border: 3px solid #E31E24;
+            background-color: #000000; /* El reproductor en sí sigue siendo negro para que luzca */
+            transform: perspective(1000px) rotateX(5deg); /* Efecto leve de inclinación 3D */
         }
     </style>
 </head>
@@ -33,7 +36,7 @@
             streamurl: "https://radio.villasnafm.org/stream",
             radioname: "Villana Fm",
             userinterface: "big",
-            backgroundcolor: "rgba(0,0,0,0.9)", 
+            backgroundcolor: "#000000", 
             fontcolor: "#ffffff",
             hightlightcolor: "#E31E24",
             fontratio: "0.4",
