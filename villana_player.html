@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Villana FM - Player Pro</title>
+    <style>
+        /* 1. ESTILOS BASE (Para centrar y fondo transparente) */
+        body, html {
+            margin: 0;
+            padding: 0;
+            background: transparent !important; /* Importante para Nicepage */
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        /* 2. EL CONTENEDOR PRINCIPAL (Efecto Neón 3D) */
+        .player-container {
+            width: 320px;
+            height: 420px;
+            background: linear-gradient(145deg, #1a1a1a, #000000); /* Degradado sutil */
+            border-radius: 30px;
+            /* Borde y Sombras Naranja Neón #FF5E00 */
+            border: 3px solid #FF5E00;
+            box-shadow: 0 0 20px rgba(255, 94, 0, 0.6), 
+                        0 10px 40px rgba(0, 0, 0, 0.5),
+                        inset 0 0 15px rgba(255, 94, 0, 0.2); /* Neón interno */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Efecto de levitación al pasar el mouse */
+        .player-container:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 0 30px rgba(255, 94, 0, 0.8), 
+                        0 15px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        /* 3. DISEÑO INTERNO */
+        
+        /* Círculo del Logo (Vinilo estático) */
+        .logo-circle {
+            width: 150px;
+            height: 150px;
+            background: #111;
+            border-radius: 50%;
+            border: 5px solid #222;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        /* Efecto de brillo de vinilo */
+        .logo-circle::after {
+            content: '';
+            position: absolute;
+            width: 100%; height: 100%;
+            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.05) 50%, transparent 60%);
+        }
+
+        .logo-text {
+            color: #FF5E00;
+            font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px #FF5E00;
+        }
+
+        /* Títulos */
+        .station-info {
+            text-align: center;
+            color: white;
+        }
+        .station-name {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            text-shadow: 0 0 5px rgba(255,255,255,0.5);
+        }
+        .status-text {
+            font-size: 14px;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* 4. CONTROLES (Botón de Play) */
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .play-btn {
+            width: 80px;
+            height: 80px;
+            background: #FF5E00;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 20px #FF5E00, 0 5px 15px rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        /* El icono de PLAY (Triángulo blanco) */
+        .play-icon {
+            width: 0; 
+            height: 0; 
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            border-left: 25px solid white;
+            margin-left: 5px; /* Ajuste céntrico */
+            transition: all 0.2s ease;
+        }
+
+        /* El icono de PAUSE (Dos barras blancas) */
+        .pause-icon {
+            display: none; /* Oculto por defecto */
+            width: 25px;
+            height: 30px;
+            justify-content: space-between;
+        }
+        .pause-bar {
+            width: 8px;
+            height: 100%;
+            background: white;
+            border-radius: 2px;
+        }
+
+        /* Efectos del botón */
+        .play-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px #FF5E00, 0 8px 20px rgba(0,0,0,0.4);
+        }
+        .play-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 0 15px #FF5E00;
+        }
+
+        /* Estado "Reproduciendo" (Cambiamos el icono) */
+        .play-btn.playing .play-icon {
+            display: none;
+        }
+        .play-btn.playing .pause-icon {
+            display: flex;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="player-container">
+        
+        <div class="logo-circle">
+            <div class="logo-text">V</div>
+        </div>
+
+        <div class="station-info">
+            <div class="station-name">Villana FM</div>
+            <div id="status" class="status-text">En Vivo</div>
+        </div>
+
+        <div class="controls">
+            <button id="playBtn" class="play-btn">
+                <div class="play-icon"></div>
+                <div class="pause-icon">
+                    <div class="pause-bar"></div>
+                    <div class="pause-bar"></div>
+                </div>
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        // 1. Configuración
+        const streamUrl = "https://radio.villasnafm.org/stream"; // TU URL DE STREAM
+        const playBtn = document.getElementById('playBtn');
+        const statusText = document.getElementById('status');
+
+        // 2. Creamos el objeto de audio nativo de HTML5
+        let audio = new Audio(streamUrl);
+        let isPlaying = false;
+
+        // 3. Función principal de Play/Pause
+        function togglePlay() {
+            if (isPlaying) {
+                // Si está sonando, lo pausamos y "destruimos" para no gastar datos
+                audio.pause();
+                audio.src = ""; // Truco para detener la descarga del stream
+                audio.load();
+                
+                playBtn.classList.remove('playing');
+                statusText.innerText = "Pausado";
+                statusText.style.color = "#aaa";
+                isPlaying = false;
+            } else {
+                // Si está pausado, lo cargamos y reproducimos
+                statusText.innerText = "Conectando...";
+                statusText.style.color = "#FF5E00";
+                
+                audio.src = streamUrl; // Volvemos a poner la URL
+                audio.load();
+                
+                // Intentamos reproducir
+                let playPromise = audio.play();
+
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => {
+                        // Reproducción exitosa
+                        playBtn.classList.add('playing');
+                        statusText.innerText = "En Vivo";
+                        statusText.style.color = "#FF5E00";
+                        isPlaying = true;
+                    })
+                    .catch(error => {
+                        // Error de conexión (CORS, stream caído, etc.)
+                        console.log("Error de audio:", error);
+                        statusText.innerText = "Error de Conexión";
+                        statusText.style.color = "red";
+                        playBtn.classList.remove('playing');
+                        isPlaying = false;
+                    });
+                }
+            }
+        }
+
+        // 4. Evento del botón
+        playBtn.addEventListener('click', togglePlay);
+
+        // 5. Manejo de errores automático del objeto audio
+        audio.addEventListener('error', function(e) {
+            console.log("Error en el stream:", e);
+            statusText.innerText = "Stream no disponible";
+            statusText.style.color = "red";
+            playBtn.classList.remove('playing');
+            isPlaying = false;
+        });
+
+    </script>
+</body>
+</html>
