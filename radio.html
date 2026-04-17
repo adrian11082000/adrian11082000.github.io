@@ -3,18 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Villana FM</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://extassisnetwork.com/player/Luna/luna.js"></script>
     <style>
-        body, html { margin: 0; padding: 0; background: #fff; height: 100vh; display: flex; justify-content: center; align-items: center; }
+        body, html { margin: 0; padding: 0; background: transparent; height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; }
         #wrapper {
-            width: 350px; 
-            height: 450px;
+            width: 350px; height: 450px;
             background: #000;
             border-radius: 20px;
             border: 3px solid #FF5E00;
-            box-shadow: 0 0 25px rgba(255, 94, 0, 0.7);
-            overflow: hidden;
+            box-shadow: 0 0 25px #FF5E00;
         }
     </style>
 </head>
@@ -22,24 +20,22 @@
     <div id="wrapper">
         <div id="luna-player"></div>
     </div>
-
     <script>
         $(document).ready(function() {
             $("#luna-player").lunaradio({
-                streamurl: "https://radio.villasnafm.org/stream",
+                streamurl: "https://radio.villasnafm.org", // Quitamos /stream al final para probar
                 radioname: "Villana FM",
                 userinterface: "big",
-                backgroundcolor: "rgba(0,0,0,0)",
+                backgroundcolor: "transparent",
                 fontcolor: "#ffffff",
                 hightlightcolor: "#FF5E00",
                 fontratio: "0.4",
-                usevisualizer: "real",
-                visualizertype: "2", /* Tipo 2 es más ligero para cargar */
+                usevisualizer: "fake", // Ponemos visualizador falso para que cargue rápido
+                visualizertype: "1",
                 streamtype: "shoutcast2",
                 shoutcastpath: "/stream",
                 shoutcastid: "1",
                 usestreamcorsproxy: "true",
-                corsproxy: "https://api.allorigins.win/raw?url=", /* Proxy de auxilio */
                 volume: "100"
             });
         });
