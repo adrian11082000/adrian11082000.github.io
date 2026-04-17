@@ -3,254 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Villana FM - Vinilo Pro</title>
+    <title>Villana FM - Pro Player</title>
     <style>
-        /* 1. ESTILOS BASE */
-        body, html {
-            margin: 0;
-            padding: 0;
-            background: transparent !important;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
-        }
-
-        /* 2. EL CONTENEDOR (Efecto Neón Naranja) */
+        body, html { margin: 0; padding: 0; background: transparent !important; height: 100vh; display: flex; justify-content: center; align-items: center; font-family: sans-serif; overflow: hidden; }
+        
         .player-container {
-            width: 320px;
-            height: 420px;
-            background: #000000;
-            border-radius: 30px;
+            width: 320px; height: 440px;
+            background: #000; border-radius: 30px;
             border: 3px solid #FF5E00;
-            box-shadow: 0 0 20px rgba(255, 94, 0, 0.6), 
-                        0 10px 40px rgba(0, 0, 0, 0.5);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-around;
-            padding: 20px;
-            box-sizing: border-box;
-            transition: transform 0.3s ease;
+            box-shadow: 0 0 20px rgba(255, 94, 0, 0.6);
+            display: flex; flex-direction: column; align-items: center; justify-content: space-evenly; padding: 20px; box-sizing: border-box;
         }
 
-        .player-container:hover {
-            transform: translateY(-5px);
-        }
-
-        /* 3. EL DISCO DE VINILO (REDISEÑADO) */
+        /* VINILO */
         .vinyl-record {
-            width: 170px;
-            height: 170px;
-            background: #111; /* Color base del disco */
-            border-radius: 50%;
-            border: 4px solid #222;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.8);
-            
-            /* Efectos de vinilo (brillos y surcos) */
-            background-image: 
-                radial-gradient(circle at center, transparent 40%, #080808 40%, #080808 43%, transparent 43%, transparent 46%, #080808 46%, #080808 49%, transparent 49%),
-                linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.05) 50%, transparent 60%);
+            width: 160px; height: 160px; background: #111; border-radius: 50%;
+            border: 4px solid #222; position: relative; display: flex; justify-content: center; align-items: center;
+            background-image: radial-gradient(circle, #000 30%, #111 31%, #000 40%, #111 41%);
         }
+        .vinyl-label { width: 110px; height: 110px; background: #fff; border-radius: 50%; overflow: hidden; display: flex; justify-content: center; align-items: center; }
+        .logo-img { width: 90%; height: auto; }
 
-        /* El centro del disco (El logo) */
-        .vinyl-label {
-            width: 120px; /* Tamaño del logo central */
-            height: 120px;
-            background: #fff;
-            border-radius: 50%;
-            border: 3px solid #333;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
-        }
+        @keyframes rotateRecord { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .spinning { animation: rotateRecord 5s linear infinite; }
 
-        .logo-img {
-            width: 90%; /* Ajusta el logo al 90% del centro */
-            height: auto;
-        }
+        /* TEXTOS */
+        .station-info { text-align: center; color: white; }
+        .station-name { font-size: 20px; font-weight: bold; margin-bottom: 5px; }
+        .status-text { font-size: 12px; color: #FF5E00; text-transform: uppercase; letter-spacing: 1px; height: 15px; }
 
-        /* 4. ANIMACIÓN DE GIRO (Sólo para el disco completo) */
-        @keyframes rotateRecord {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* Clase que activa el giro (se pone con JS) */
-        .vinyl-record.spinning {
-            animation: rotateRecord 5s linear infinite;
-        }
-
-        /* 5. TÍTULOS */
-        .station-info {
-            text-align: center;
-            color: white;
-        }
-        .station-name {
-            font-size: 20px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 3px;
-        }
-        .status-text {
-            font-size: 13px;
-            color: #aaa;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* 6. BOTÓN DE PLAY (Naranja Neón) */
-        .controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
+        /* CONTROLES */
+        .controls { display: flex; flex-direction: column; align-items: center; gap: 15px; width: 100%; }
+        
         .play-btn {
-            width: 70px;
-            height: 70px;
-            background: #FF5E00;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 0 15px #FF5E00;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.2s ease;
+            width: 65px; height: 65px; background: #FF5E00; border: none; border-radius: 50%; cursor: pointer;
+            box-shadow: 0 0 15px #FF5E00; display: flex; justify-content: center; align-items: center; transition: 0.2s;
         }
+        .play-btn:active { transform: scale(0.9); }
+        .play-icon { width: 0; height: 0; border-top: 12px solid transparent; border-bottom: 12px solid transparent; border-left: 20px solid white; margin-left: 5px; }
+        .pause-icon { display: none; width: 20px; height: 25px; justify-content: space-between; }
+        .pause-bar { width: 7px; height: 100%; background: white; border-radius: 2px; }
+        .playing .play-icon { display: none; }
+        .playing .pause-icon { display: flex; }
 
-        /* Icono PLAY (Triángulo) */
-        .play-icon {
-            width: 0; 
-            height: 0; 
-            border-top: 13px solid transparent;
-            border-bottom: 13px solid transparent;
-            border-left: 22px solid white;
-            margin-left: 4px;
-            transition: all 0.2s ease;
+        /* VOLUMEN */
+        .volume-container { display: flex; align-items: center; gap: 10px; width: 80%; }
+        .volume-icon { color: white; font-size: 18px; cursor: default; }
+        .volume-slider {
+            -webkit-appearance: none; width: 100%; height: 5px; background: #333;
+            border-radius: 5px; outline: none; cursor: pointer;
         }
-
-        /* Icono PAUSE (Barras) */
-        .pause-icon {
-            display: none;
-            width: 22px;
-            height: 25px;
-            justify-content: space-between;
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 15px; height: 15px; background: #FF5E00;
+            border-radius: 50%; box-shadow: 0 0 10px #FF5E00; cursor: pointer;
         }
-        .pause-bar {
-            width: 7px;
-            height: 100%;
-            background: white;
-            border-radius: 2px;
-        }
-
-        /* Botón al reproducir */
-        .play-btn.playing .play-icon {
-            display: none;
-        }
-        .play-btn.playing .pause-icon {
-            display: flex;
-        }
-
     </style>
 </head>
 <body>
 
     <div class="player-container">
-        
         <div id="vinylRecord" class="vinyl-record">
             <div class="vinyl-label">
-                <img src="https://adrian11082000.github.io/Logo-Villana-Villa-del-Rosario-Villanafm.png" alt="Villana FM Logo" class="logo-img">
+                <img src="https://adrian11082000.github.io/Logo-Villana-Villa-del-Rosario-Villanafm.png" class="logo-img">
             </div>
         </div>
 
         <div class="station-info">
             <div class="station-name">Villana FM</div>
-            <div id="status" class="status-text">Pausado</div>
+            <div id="status" class="status-text">LISTO</div>
         </div>
 
         <div class="controls">
             <button id="playBtn" class="play-btn">
                 <div class="play-icon"></div>
-                <div class="pause-icon">
-                    <div class="pause-bar"></div>
-                    <div class="pause-bar"></div>
-                </div>
+                <div class="pause-icon"><div class="pause-bar"></div><div class="pause-bar"></div></div>
             </button>
-        </div>
 
+            <div class="volume-container">
+                <span class="volume-icon">🔈</span>
+                <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.01" value="0.8">
+                <span class="volume-icon">🔊</span>
+            </div>
+        </div>
     </div>
 
     <script>
         const streamUrl = "https://radio.villasnafm.org/stream";
         const playBtn = document.getElementById('playBtn');
         const statusText = document.getElementById('status');
-        const vinylRecord = document.getElementById('vinylRecord'); // Recuperamos el disco
+        const vinylRecord = document.getElementById('vinylRecord');
+        const volumeSlider = document.getElementById('volumeSlider');
 
-        let audio = new Audio(streamUrl);
+        let audio = new Audio();
+        audio.src = streamUrl;
+        audio.volume = 0.8;
         let isPlaying = false;
 
         function togglePlay() {
             if (isPlaying) {
                 audio.pause();
-                audio.src = "";
-                audio.load();
-                
+                // No reseteamos el src para evitar el error visual, solo pausamos
                 playBtn.classList.remove('playing');
-                vinylRecord.classList.remove('spinning'); // Detener giro
-                statusText.innerText = "Pausado";
-                statusText.style.color = "#aaa";
+                vinylRecord.classList.remove('spinning');
+                statusText.innerText = "PAUSADO";
                 isPlaying = false;
             } else {
-                statusText.innerText = "Conectando...";
-                statusText.style.color = "#FF5E00";
-                
+                statusText.innerText = "CONECTANDO...";
+                // Refrescamos el stream para que sea en vivo real
                 audio.src = streamUrl;
                 audio.load();
                 
-                let playPromise = audio.play();
-
-                if (playPromise !== undefined) {
-                    playPromise.then(_ => {
-                        playBtn.classList.add('playing');
-                        vinylRecord.classList.add('spinning'); // Iniciar giro
-                        statusText.innerText = "En Vivo";
-                        statusText.style.color = "#FF5E00";
-                        isPlaying = true;
-                    })
-                    .catch(error => {
-                        console.log("Error de audio:", error);
-                        statusText.innerText = "Error de Conexión";
-                        statusText.style.color = "red";
-                        playBtn.classList.remove('playing');
-                        vinylRecord.classList.remove('spinning'); // Detener giro
-                        isPlaying = false;
-                    });
-                }
+                audio.play().then(() => {
+                    playBtn.classList.add('playing');
+                    vinylRecord.classList.add('spinning');
+                    statusText.innerText = "EN VIVO";
+                    isPlaying = true;
+                }).catch(err => {
+                    statusText.innerText = "ERROR DE SEÑAL";
+                    console.error("Error:", err);
+                });
             }
         }
 
         playBtn.addEventListener('click', togglePlay);
 
-        audio.addEventListener('error', function(e) {
-            statusText.innerText = "Error en el stream";
-            statusText.style.color = "red";
-            playBtn.classList.remove('playing');
-            vinylRecord.classList.remove('spinning');
-            isPlaying = false;
+        volumeSlider.addEventListener('input', (e) => {
+            audio.volume = e.target.value;
         });
 
+        audio.addEventListener('waiting', () => { statusText.innerText = "CARGANDO..."; });
+        audio.addEventListener('playing', () => { statusText.innerText = "EN VIVO"; });
     </script>
 </body>
 </html>
