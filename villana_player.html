@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Villana FM - Player Pro</title>
+    <title>Villana FM - Vinilo Pro</title>
     <style>
-        /* 1. ESTILOS BASE (Para centrar y fondo transparente) */
+        /* 1. ESTILOS BASE */
         body, html {
             margin: 0;
             padding: 0;
-            background: transparent !important; /* Importante para Nicepage */
+            background: transparent !important;
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -18,85 +18,98 @@
             overflow: hidden;
         }
 
-        /* 2. EL CONTENEDOR PRINCIPAL (Efecto Neón 3D) */
+        /* 2. EL CONTENEDOR (Efecto Neón Naranja) */
         .player-container {
             width: 320px;
             height: 420px;
-            background: linear-gradient(145deg, #1a1a1a, #000000); /* Degradado sutil */
+            background: #000000;
             border-radius: 30px;
-            /* Borde y Sombras Naranja Neón #FF5E00 */
             border: 3px solid #FF5E00;
             box-shadow: 0 0 20px rgba(255, 94, 0, 0.6), 
-                        0 10px 40px rgba(0, 0, 0, 0.5),
-                        inset 0 0 15px rgba(255, 94, 0, 0.2); /* Neón interno */
+                        0 10px 40px rgba(0, 0, 0, 0.5);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-around;
             padding: 20px;
             box-sizing: border-box;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease;
         }
 
-        /* Efecto de levitación al pasar el mouse */
         .player-container:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 0 30px rgba(255, 94, 0, 0.8), 
-                        0 15px 50px rgba(0, 0, 0, 0.4);
+            transform: translateY(-5px);
         }
 
-        /* 3. DISEÑO INTERNO */
-        
-        /* Círculo del Logo (Vinilo estático) */
-        .logo-circle {
-            width: 150px;
-            height: 150px;
-            background: #111;
+        /* 3. EL DISCO DE VINILO (REDISEÑADO) */
+        .vinyl-record {
+            width: 170px;
+            height: 170px;
+            background: #111; /* Color base del disco */
             border-radius: 50%;
-            border: 5px solid #222;
-            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            border: 4px solid #222;
+            position: relative;
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            position: relative;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.8);
+            
+            /* Efectos de vinilo (brillos y surcos) */
+            background-image: 
+                radial-gradient(circle at center, transparent 40%, #080808 40%, #080808 43%, transparent 43%, transparent 46%, #080808 46%, #080808 49%, transparent 49%),
+                linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.05) 50%, transparent 60%);
+        }
+
+        /* El centro del disco (El logo) */
+        .vinyl-label {
+            width: 120px; /* Tamaño del logo central */
+            height: 120px;
+            background: #fff;
+            border-radius: 50%;
+            border: 3px solid #333;
             overflow: hidden;
-        }
-        /* Efecto de brillo de vinilo */
-        .logo-circle::after {
-            content: '';
-            position: absolute;
-            width: 100%; height: 100%;
-            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.05) 50%, transparent 60%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
         }
 
-        .logo-text {
-            color: #FF5E00;
-            font-size: 24px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px #FF5E00;
+        .logo-img {
+            width: 90%; /* Ajusta el logo al 90% del centro */
+            height: auto;
         }
 
-        /* Títulos */
+        /* 4. ANIMACIÓN DE GIRO (Sólo para el disco completo) */
+        @keyframes rotateRecord {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Clase que activa el giro (se pone con JS) */
+        .vinyl-record.spinning {
+            animation: rotateRecord 5s linear infinite;
+        }
+
+        /* 5. TÍTULOS */
         .station-info {
             text-align: center;
             color: white;
         }
         .station-name {
-            font-size: 22px;
-            font-weight: 600;
-            margin-bottom: 5px;
-            text-shadow: 0 0 5px rgba(255,255,255,0.5);
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 3px;
         }
         .status-text {
-            font-size: 14px;
+            font-size: 13px;
             color: #aaa;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        /* 4. CONTROLES (Botón de Play) */
+        /* 6. BOTÓN DE PLAY (Naranja Neón) */
         .controls {
             display: flex;
             justify-content: center;
@@ -104,56 +117,45 @@
         }
 
         .play-btn {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             background: #FF5E00;
             border: none;
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 0 20px #FF5E00, 0 5px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 0 15px #FF5E00;
             display: flex;
             justify-content: center;
             align-items: center;
             transition: all 0.2s ease;
-            position: relative;
         }
 
-        /* El icono de PLAY (Triángulo blanco) */
+        /* Icono PLAY (Triángulo) */
         .play-icon {
             width: 0; 
             height: 0; 
-            border-top: 15px solid transparent;
-            border-bottom: 15px solid transparent;
-            border-left: 25px solid white;
-            margin-left: 5px; /* Ajuste céntrico */
+            border-top: 13px solid transparent;
+            border-bottom: 13px solid transparent;
+            border-left: 22px solid white;
+            margin-left: 4px;
             transition: all 0.2s ease;
         }
 
-        /* El icono de PAUSE (Dos barras blancas) */
+        /* Icono PAUSE (Barras) */
         .pause-icon {
-            display: none; /* Oculto por defecto */
-            width: 25px;
-            height: 30px;
+            display: none;
+            width: 22px;
+            height: 25px;
             justify-content: space-between;
         }
         .pause-bar {
-            width: 8px;
+            width: 7px;
             height: 100%;
             background: white;
             border-radius: 2px;
         }
 
-        /* Efectos del botón */
-        .play-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px #FF5E00, 0 8px 20px rgba(0,0,0,0.4);
-        }
-        .play-btn:active {
-            transform: scale(0.95);
-            box-shadow: 0 0 15px #FF5E00;
-        }
-
-        /* Estado "Reproduciendo" (Cambiamos el icono) */
+        /* Botón al reproducir */
         .play-btn.playing .play-icon {
             display: none;
         }
@@ -167,13 +169,15 @@
 
     <div class="player-container">
         
-       <div class="logo-circle">
-    <img src="https://adrian11082000.github.io/Logo-Villana-Villa-del-Rosario-Villanafm.png" style="width:80%; height:auto;">
- </div>
+        <div id="vinylRecord" class="vinyl-record">
+            <div class="vinyl-label">
+                <img src="https://adrian11082000.github.io/Logo-Villana-Villa-del-Rosario-Villanafm.png" alt="Villana FM Logo" class="logo-img">
+            </div>
+        </div>
 
         <div class="station-info">
             <div class="station-name">Villana FM</div>
-            <div id="status" class="status-text">En Vivo</div>
+            <div id="status" class="status-text">Pausado</div>
         </div>
 
         <div class="controls">
@@ -189,67 +193,61 @@
     </div>
 
     <script>
-        // 1. Configuración
-        const streamUrl = "https://radio.villasnafm.org/stream"; // TU URL DE STREAM
+        const streamUrl = "https://radio.villasnafm.org/stream";
         const playBtn = document.getElementById('playBtn');
         const statusText = document.getElementById('status');
+        const vinylRecord = document.getElementById('vinylRecord'); // Recuperamos el disco
 
-        // 2. Creamos el objeto de audio nativo de HTML5
         let audio = new Audio(streamUrl);
         let isPlaying = false;
 
-        // 3. Función principal de Play/Pause
         function togglePlay() {
             if (isPlaying) {
-                // Si está sonando, lo pausamos y "destruimos" para no gastar datos
                 audio.pause();
-                audio.src = ""; // Truco para detener la descarga del stream
+                audio.src = "";
                 audio.load();
                 
                 playBtn.classList.remove('playing');
+                vinylRecord.classList.remove('spinning'); // Detener giro
                 statusText.innerText = "Pausado";
                 statusText.style.color = "#aaa";
                 isPlaying = false;
             } else {
-                // Si está pausado, lo cargamos y reproducimos
                 statusText.innerText = "Conectando...";
                 statusText.style.color = "#FF5E00";
                 
-                audio.src = streamUrl; // Volvemos a poner la URL
+                audio.src = streamUrl;
                 audio.load();
                 
-                // Intentamos reproducir
                 let playPromise = audio.play();
 
                 if (playPromise !== undefined) {
                     playPromise.then(_ => {
-                        // Reproducción exitosa
                         playBtn.classList.add('playing');
+                        vinylRecord.classList.add('spinning'); // Iniciar giro
                         statusText.innerText = "En Vivo";
                         statusText.style.color = "#FF5E00";
                         isPlaying = true;
                     })
                     .catch(error => {
-                        // Error de conexión (CORS, stream caído, etc.)
                         console.log("Error de audio:", error);
                         statusText.innerText = "Error de Conexión";
                         statusText.style.color = "red";
                         playBtn.classList.remove('playing');
+                        vinylRecord.classList.remove('spinning'); // Detener giro
                         isPlaying = false;
                     });
                 }
             }
         }
 
-        // 4. Evento del botón
         playBtn.addEventListener('click', togglePlay);
 
-        // 5. Manejo de errores automático del objeto audio
         audio.addEventListener('error', function(e) {
-            console.log("Error en el stream:", e);
-            statusText.innerText = "Stream no disponible";
+            statusText.innerText = "Error en el stream";
             statusText.style.color = "red";
             playBtn.classList.remove('playing');
+            vinylRecord.classList.remove('spinning');
             isPlaying = false;
         });
 
